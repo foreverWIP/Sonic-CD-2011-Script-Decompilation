@@ -1,3 +1,6 @@
+// welcome to mighty in sonic cd v2...
+// the mightiest and rayest sonic cd mod yet...
+
 //----------------Sonic CD Player Object Script---------------//
 //--------Scripted by Christian Whitehead 'The Taxman'--------//
 //-------Unpacked By Rubberduckycooly's Script Unpacker-------//
@@ -235,6 +238,12 @@
 #function Player_State_HammerDash
 #function Player_SetHammerDashSpeed
 #function Player_Setup_Startup
+
+// Mighty & Ray
+#function Player_CanMightyWallJumpLeft
+#function Player_CanMightyWallJumpRight
+#function Player_Action_DblJumpMighty
+#function Player_State_MightyWallCling
 
 #function Player_ClimbBlock
 #function Player_Unstick
@@ -516,6 +525,61 @@ function Player_Kill
 end function
 
 function Player_ProcessUpdate
+	#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+#endplatform
+#platform: Use_Origins
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+#endplatform
+		if MightyBonkSfxRepeatTimer>0
+			MightyBonkSfxRepeatTimer--
+			if Player.Animation==ANI_LOOKINGDOWN
+				if Player.Speed>0
+					TempValue0=Player.Speed
+					TempValue0-=0x800
+					if TempValue0<0
+						TempValue0=0
+					endif
+					Player.Speed=TempValue0
+				else
+					TempValue0=Player.Speed
+					TempValue0+=0x800
+					if TempValue0>0
+						TempValue0=0
+					endif
+					Player.Speed=TempValue0
+				endif
+				if MightyBonkSfxRepeatTimer==0
+					if Player.Gravity==0
+						Player.Speed=0
+					endif
+				endif
+			endif
+		endif
+		CheckEqual(Player.Animation,ANI_JUMPING)
+		TempValue0=CheckResult
+		CheckEqual(Player.Animation,ANI_DROPPING)
+		TempValue0|=CheckResult
+		CheckEqual(Player.Animation,ANI_WJ_HOLD)
+		TempValue0|=CheckResult
+		CheckEqual(Player.Animation,ANI_WJ_OFF)
+		TempValue0|=CheckResult
+		if TempValue0==0
+			if Player.GravityStrength==0x1000
+				Player.JumpStrength=0x38000
+			else
+				Player.JumpStrength=0x68000
+			endif
+			MightyWallJumpClingTimer=0
+		endif
+		if Player.Animation==ANI_WJ_OFF
+			if Player.Frame==1
+				Player.Animation=ANI_JUMPING
+				Player.Frame=0
+			endif
+		endif
+	endif
+
 #platform: Standard
 	if Options.AttractMode == false
 		if Player.ControlMode == CONTROLMODE_NORMAL
@@ -1157,6 +1221,14 @@ end function
 
 // Gets X and Y Velocity based on angles
 function Player_HandleOnGround
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+#endplatform
+#platform: Use_Origins
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+#endplatform
+		MightyWallJumpUpLock = 0
+	endif
 	Player.TrackScroll = false
 
 	Cos256(TempValue0, Player.Angle)
@@ -3335,6 +3407,10 @@ function Player_State_SizeChange
 				Object[1].Type = TypeName[Tails Object] // Restore Tails's tails
 				break
 			end switch
+
+			if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+				LoadAnimation("Mighty.Ani")
+			end if
 #endplatform
 
 #platform: Use_Origins
@@ -3353,6 +3429,10 @@ function Player_State_SizeChange
 
 			if Stage.PlayerListPos == PLAYER_AMY
 				LoadAnimation("Amy.Ani")
+			end if
+
+			if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+				LoadAnimation("Mighty.Ani")
 			end if
 #endplatform
 		end if
@@ -3436,6 +3516,195 @@ function Player_Action_DblJumpKnux
 		end if
 	end if
 #endplatform
+end function
+
+
+function Player_CanMightyWallJumpLeft
+	if Player.Gravity == GRAVITY_AIR
+		TempValue7 = Player.XPos
+		Player.Direction = FACING_LEFT
+		Player.XPos = TempValue7
+		Player.XPos += Player.XVelocity
+		Player.YPos = Player.YPos
+		Object.XPos = Player.XPos
+		Object.YPos = Player.YPos
+		ObjectTileCollision(CSIDE_RWALL, -12, -2, Player.CollisionPlane)
+		Player.XPos = Object.XPos
+		TempValue0 = CheckResult
+		TempValue2 = Player.XPos
+		Player.XPos = TempValue7
+		Player.XPos += Player.XVelocity
+		Object.XPos = Player.XPos
+		Object.YPos = Player.YPos
+		ObjectTileCollision(CSIDE_RWALL, -12, 11, Player.CollisionPlane)
+		Player.XPos = Object.XPos
+		TempValue1 = CheckResult
+		TempValue3 = Player.XPos
+
+		Player.XPos = TempValue7
+		CheckResult = TempValue0
+		CheckResult &= TempValue1
+		if CheckResult == true
+			if TempValue2 == TempValue3
+				CheckResult = true
+			else
+				CheckResult = false
+			end if
+		else
+			CheckResult = false
+		end if
+	else
+		CheckResult = false
+	end if
+end function
+
+
+function Player_CanMightyWallJumpRight
+	if Player.Gravity == GRAVITY_AIR
+		TempValue7 = Player.XPos
+		Player.Direction = FACING_RIGHT
+		Player.XPos = TempValue7
+		Player.XPos += Player.XVelocity
+		Player.YPos = Player.YPos
+		Object.XPos = Player.XPos
+		Object.YPos = Player.YPos
+		ObjectTileCollision(CSIDE_LWALL, 12, -2, Player.CollisionPlane)
+		Player.XPos = Object.XPos
+		TempValue0 = CheckResult
+		TempValue2 = Player.XPos
+		Player.XPos = TempValue7
+		Player.XPos += Player.XVelocity
+		Object.XPos = Player.XPos
+		Object.YPos = Player.YPos
+		ObjectTileCollision(CSIDE_LWALL, 12, 11, Player.CollisionPlane)
+		Player.XPos = Object.XPos
+		TempValue1 = CheckResult
+		TempValue3 = Player.XPos
+
+		Player.XPos = TempValue7
+		CheckResult = TempValue0
+		CheckResult &= TempValue1
+		if CheckResult == true
+			TempValue2 >>= 1
+			TempValue3 >>= 1
+			if TempValue2 == TempValue3
+				CheckResult = true
+			else
+				CheckResult = false
+			end if
+		else
+			CheckResult = false
+		end if
+	else
+		CheckResult = false
+	end if
+end function
+
+
+function Player_State_MightyWallCling
+	Player.XVelocity=0
+	Player.YVelocity=0
+	if Player.Gravity==1
+		if MightyWallJumpClingTimer>=40
+			Player.Animation=ANI_DROPPING
+			Player.State=Player_State_Air
+		else
+			Player.Animation=ANI_WJ_HOLD
+			TempValue0=MightyWallJumpClingTimer
+			TempValue0*=0x200
+			Player.YVelocity+=TempValue0
+
+			// TempValue6 is storage for angle
+			// TempValue7 is storage for jump strength
+
+			if Player.Down==0
+				if Player.JumpHold!=1
+					if Player.Up!=0
+						// upwards jump
+						TempValue6=0
+						TempValue7=0x48000
+						MightyWallJumpUpLock=39
+						if Player.GravityStrength==4096
+							MightyWallJumpUpLock*=5
+							MightyWallJumpUpLock/=2
+						endif
+						if Player.Direction==FACING_RIGHT
+							TempValue7*=-1
+						endif
+					else
+						if Player.Left!=0
+							if Player.Right!=0
+								// if both directions are pressed,
+								// default to holding into wall
+								TempValue6=0x60
+								TempValue7=0x40000
+							else
+								TempValue6=0x40
+								if Player.Direction==FACING_RIGHT
+									// facing right + holding left = away
+									TempValue7=0x68000
+								else
+									// facing left + holding left = into
+									TempValue7=0x40000
+								endif
+							endif
+						else
+							if Player.Right!=0
+								TempValue6=0x60
+								if Player.Direction==FACING_RIGHT
+									// facing right + holding right = into
+									TempValue7=0x40000
+								else
+									// facing left + holding right = away
+									TempValue7=0x68000
+								endif
+							else
+								// none held
+								TempValue6=0x50
+								TempValue7=0x50000
+							endif
+						endif
+						MightyWallJumpUpLock=10
+					endif
+					if Player.Direction==FACING_RIGHT
+						TempValue7*=-1
+					else
+						TempValue6-=0x80
+					endif
+					if Player.GravityStrength==4096
+						TempValue7*=3
+						TempValue7/=4
+					endif
+					Player.Angle=TempValue6
+					Player.JumpStrength=TempValue7
+					MightyWallJumpClingTimer=1
+					CallFunction(Player_Action_Jump)
+				endif
+			else
+				Player.State=Player_State_Air
+				Player.Animation=ANI_DROPPING
+			endif
+			MightyWallJumpClingTimer++
+		endif
+	else
+		Player.State=Player_HandleGroundMovement
+		CallFunction(Player_HandleOnGround)
+		Player.Skidding=0
+	endif
+endfunction
+
+
+function Player_Action_DblJumpMighty
+	if Player.Direction == FACING_RIGHT
+		CallFunction(Player_CanMightyWallJumpRight)
+	else
+		CallFunction(Player_CanMightyWallJumpLeft)
+	end if
+	if CheckResult == true
+		if Player.JumpPress == true
+			Player.State = Player_State_MightyWallCling
+		endif
+	end if
 end function
 
 
@@ -4838,6 +5107,42 @@ sub ObjectStartup
 				break
 
 			end switch
+
+			if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+				ResetObjectEntity(0, TypeName[Player Object], 0, Object[ArrayPos0].XPos, Object[ArrayPos0].YPos)
+				Player.XPos = Object[ArrayPos0].XPos
+				Player.YPos = Object[ArrayPos0].YPos
+
+				LoadAnimation("Mighty.Ani")
+				BindPlayerToObject(0, 0)
+
+				Player.State = Player_State_Air
+
+				Player.Priority = PRIORITY_ACTIVE
+
+				Player.DrawOrder = 4
+
+				Player.TopSpeed				=  0x60000
+				Player.Acceleration			=  0xC00
+				Player.Deceleration			=  0xC00
+				Player.AirAcceleration		=  0x1800
+				Player.AirDeceleration		=  0x600
+				Player.GravityStrength		=  0x3800
+				Player.JumpStrength			=  0x68000
+				Player.JumpCap				= -0x40000
+				Player.RollingDeceleration	=  0x2000
+
+				Player.JumpOffset			= -5
+
+				Player.JumpAbility			= Player_Action_DblJumpMighty
+				if Options.OriginalControls == false
+					Player.ActionPeelout = Player_Action_Jump
+					Player.ActionSpindash = Player_Action_Spindash_S2
+				else
+					Player.ActionPeelout = Player_Action_Jump
+					Player.ActionSpindash = Player_Action_Spindash_CD
+				end if
+			end if
 
 			GetAnimationByName(ANI_SPINNING_TOP, "Spinning Top")
 			GetAnimationByName(ANI_RAMP_RUNNING1, "3D Ramp 1")

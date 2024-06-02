@@ -1,0 +1,45 @@
+//-------Aliases-------//
+#alias 14: TYPE_DA_AMY
+
+#alias Object.Value0: DAAmy.AnimTimer
+
+
+sub ObjectMain
+    DAAmy.AnimTimer++
+	if DAAmy.AnimTimer>=0
+        Object.Frame=0
+    endif
+    if DAAmy.AnimTimer>=21
+        Object.Frame=1
+    endif
+    if DAAmy.AnimTimer>=27
+        Object.Frame=2
+    endif
+    if DAAmy.AnimTimer>=48
+        Object.Frame=1
+    endif
+    if DAAmy.AnimTimer>=54
+        Object.Frame=0
+        DAAmy.AnimTimer=0
+    endif
+endsub
+
+
+sub ObjectDraw
+	DrawSpriteScreenXY(Object.Frame,350,160)
+    DrawSpriteScreenXY(3,350,118)
+endsub
+
+
+sub ObjectStartup
+	LoadSpriteSheet("DAGarden/Objects.gif")
+	SpriteFrame(-16,0,32,40,330,909) // dance left
+    SpriteFrame(-16,0,32,40,364,909) // dance center
+    SpriteFrame(-16,0,32,40,398,909) // dance right
+    SpriteFrame(-25,0,50,42,432,907) // speech bubble
+endsub
+
+sub RSDK
+	LoadSpriteSheet("Global/Display.gif")
+	SetEditorIcon(Icon0,SingleIcon,-16,-16,32,32,1,143)
+endsub
