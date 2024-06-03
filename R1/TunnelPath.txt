@@ -740,6 +740,16 @@ sub ObjectStartup
 		LoadSpriteSheet("R1/Objects3.gif")
 		SpriteFrame(-14, -16, 29, 32, 115, 167)
 	end if
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+		LoadSpriteSheet("R1/Objects.gif")
+		SpriteFrame(-16, -16, 32, 32, 34, 175)
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+		LoadSpriteSheet("R1/Objects.gif")
+		SpriteFrame(-16, -16, 32, 32, 34, 175)
+	end if
+#endplatform
 #platform: Use_Origins
 	if Stage.PlayerListPos == PLAYER_KNUCKLES
 		LoadSpriteSheet("R1/Objects3.gif")
@@ -748,6 +758,14 @@ sub ObjectStartup
 	if Stage.PlayerListPos == PLAYER_AMY
 		LoadSpriteSheet("R1/Objects3.gif")
 		SpriteFrame(-16, -20, 32, 40, 158, 214)
+	end if
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("R1/Objects.gif")
+		SpriteFrame(-16, -16, 32, 32, 34, 175)
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("R1/Objects.gif")
+		SpriteFrame(-16, -16, 32, 32, 34, 175)
 	end if
 #endplatform
 end sub

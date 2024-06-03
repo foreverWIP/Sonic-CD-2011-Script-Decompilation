@@ -252,6 +252,14 @@ sub ObjectStartup
 	if Stage.PlayerListPos == PLAYER_TAILS_A // PLAYER_TAILS in origins
 		LoadSpriteSheet("Global/Items2_t.gif")
 	end if
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+		LoadSpriteSheet("Global/Items2.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+		LoadSpriteSheet("Global/Items2.gif")
+	end if
+#endplatform
 #platform: Use_Origins
 	// the file name suffixes are lowercase in every other script, but for some reason they're uppercase here in this script only? sure ig..?
 	if Stage.PlayerListPos == PLAYER_KNUCKLES
@@ -259,6 +267,12 @@ sub ObjectStartup
 	end if
 	if Stage.PlayerListPos == PLAYER_AMY
 		LoadSpriteSheet("Global/Items2_A.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("Global/Items2.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("Global/Items2.gif")
 	end if
 #endplatform
 

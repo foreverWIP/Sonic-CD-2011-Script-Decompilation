@@ -528,7 +528,23 @@ sub ObjectStartup
 
 	LoadSpriteSheet("R7/Objects3.gif")
 
-	LoadAnimation("MetalSonic.Ani")
+#platform: Use_Standalone
+	CheckEqual(Stage.PlayerListPos, PLAYER_MIGHTY_STANDALONE)
+	TempValue0 = CheckResult
+	CheckEqual(Stage.PlayerListPos, PLAYER_RAY_STANDALONE)
+	CheckResult |= TempValue0
+#endplatform
+#platform: Use_Origins
+	CheckEqual(Stage.PlayerListPos, PLAYER_MIGHTY_ORIGINS)
+	TempValue0 = CheckResult
+	CheckEqual(Stage.PlayerListPos, PLAYER_RAY_ORIGINS)
+	CheckResult |= TempValue0
+#endplatform
+	if CheckResult == true
+		LoadAnimation("Mighty.Ani")
+	else
+		LoadAnimation("MetalSonic.Ani")
+	end if
 
 	// 0-3 - Thruster Frames Set 1
 	SpriteFrame(0, 0, 0, 0, 1, 83)

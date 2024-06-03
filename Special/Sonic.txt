@@ -1790,12 +1790,26 @@ sub ObjectStartup
 	if Stage.PlayerListPos == PLAYER_TAILS_A // PLAYER_TAILS in origins
 		LoadSpriteSheet("Special/Tails.gif")
 	end if
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+		LoadSpriteSheet("Special/Mighty.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+		LoadSpriteSheet("Special/Ray.gif")
+	end if
+#endplatform
 #platform: Use_Origins
 	if Stage.PlayerListPos == PLAYER_KNUCKLES
 		LoadSpriteSheet("Special/Knuckles.gif")
 	end if
 	if Stage.PlayerListPos == PLAYER_AMY
 		LoadSpriteSheet("Special/Amy.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("Special/Mighty.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("Special/Ray.gif")
 	end if
 #endplatform
 	

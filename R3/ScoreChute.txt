@@ -274,6 +274,20 @@ sub ObjectStartup
 		SpriteFrame(-16, -24, 32, 16, 66, 133)	// #1 - Jump Insert Frame 0
 		SpriteFrame(-8, -16, 16, 8, 99, 150)	// #2 - Jump Insert Frame 1
 	end if
+
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("R3/Objects.gif")
+		SpriteFrame(-24, -8, 48, 16, 117, 233)	// #0 - Score Chute Active
+		SpriteFrame(-16, -24, 32, 16, 2, 240)	// #1 - Jump Insert Frame 0
+		SpriteFrame(-8, -16, 16, 8, 35, 241)	// #2 - Jump Insert Frame 1
+	end if
+
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("R3/Objects.gif")
+		SpriteFrame(-24, -8, 48, 16, 117, 233)	// #0 - Score Chute Active
+		SpriteFrame(-16, -24, 32, 16, 2, 240)	// #1 - Jump Insert Frame 0
+		SpriteFrame(-8, -16, 16, 8, 35, 241)	// #2 - Jump Insert Frame 1
+	end if
 #endplatform
 
 	// Used to be below LoadSpriteSheet, moved here for consistency

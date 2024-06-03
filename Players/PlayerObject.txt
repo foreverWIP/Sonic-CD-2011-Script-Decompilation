@@ -3367,6 +3367,14 @@ function Player_State_SizeChange
 				Object[1].Type = TypeName[Blank Object] // Mini Tails's tails are built-in with his sprites
 				break
 			end switch
+
+			if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+				LoadAnimation("MiniMighty.Ani")
+			end if
+
+			if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+				LoadAnimation("MiniRay.Ani")
+			end if
 #endplatform
 
 #platform: Use_Origins
@@ -3390,6 +3398,14 @@ function Player_State_SizeChange
 				Object[1].Type = TypeName[Blank Object] // Mini Amy... doesn't have tails, but set the object to blank anyway, I guess
 				break
 			end switch
+
+			if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+				LoadAnimation("MiniMighty.Ani")
+			end if
+
+			if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+				LoadAnimation("MiniRay.Ani")
+			end if
 #endplatform
 		else
 			Mini_PlayerFlag = false
@@ -3410,6 +3426,10 @@ function Player_State_SizeChange
 
 			if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
 				LoadAnimation("Mighty.Ani")
+			end if
+
+			if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+				LoadAnimation("Ray.Ani")
 			end if
 #endplatform
 
@@ -3433,6 +3453,10 @@ function Player_State_SizeChange
 
 			if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
 				LoadAnimation("Mighty.Ani")
+			end if
+
+			if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+				LoadAnimation("Ray.Ani")
 			end if
 #endplatform
 		end if
@@ -4742,6 +4766,14 @@ function Player_Setup_Startup
 		if Stage.PlayerListPos == PLAYER_AMY
 			LoadAnimation("Amy.Ani")
 		end if
+
+		if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+			LoadAnimation("Mighty.Ani")
+		end if
+
+		if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+			LoadAnimation("Ray.Ani")
+		end if
 	else
 		if Stage.PlayerListPos == PLAYER_SONIC
 			LoadAnimation("MiniSonic.Ani")
@@ -4761,6 +4793,14 @@ function Player_Setup_Startup
 		if Stage.PlayerListPos == PLAYER_AMY
 			LoadAnimation("MiniAmy.Ani")
 			Object[1].Type = TypeName[Blank Object]
+		end if
+
+		if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+			LoadAnimation("MiniMighty.Ani")
+		end if
+
+		if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+			LoadAnimation("MiniRay.Ani")
 		end if
 	end if
 
@@ -5135,6 +5175,42 @@ sub ObjectStartup
 				Player.JumpOffset			= -5
 
 				Player.JumpAbility			= Player_Action_DblJumpMighty
+				if Options.OriginalControls == false
+					Player.ActionPeelout = Player_Action_Jump
+					Player.ActionSpindash = Player_Action_Spindash_S2
+				else
+					Player.ActionPeelout = Player_Action_Jump
+					Player.ActionSpindash = Player_Action_Spindash_CD
+				end if
+			end if
+
+			if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+				ResetObjectEntity(0, TypeName[Player Object], 0, Object[ArrayPos0].XPos, Object[ArrayPos0].YPos)
+				Player.XPos = Object[ArrayPos0].XPos
+				Player.YPos = Object[ArrayPos0].YPos
+
+				LoadAnimation("Ray.Ani")
+				BindPlayerToObject(0, 0)
+
+				Player.State = Player_State_Air
+
+				Player.Priority = PRIORITY_ACTIVE
+
+				Player.DrawOrder = 4
+
+				Player.TopSpeed				=  0x60000
+				Player.Acceleration			=  0xC00
+				Player.Deceleration			=  0xC00
+				Player.AirAcceleration		=  0x1800
+				Player.AirDeceleration		=  0x600
+				Player.GravityStrength		=  0x3800
+				Player.JumpStrength			=  0x68000
+				Player.JumpCap				= -0x40000
+				Player.RollingDeceleration	=  0x2000
+
+				Player.JumpOffset			= -5
+
+				Player.JumpAbility			= Player_State_Static
 				if Options.OriginalControls == false
 					Player.ActionPeelout = Player_Action_Jump
 					Player.ActionSpindash = Player_Action_Spindash_S2

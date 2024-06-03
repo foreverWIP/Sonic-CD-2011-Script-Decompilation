@@ -357,12 +357,26 @@ sub ObjectStartup
 	if Stage.PlayerListPos == PLAYER_TAILS_A
 		LoadSpriteSheet("Global/Display_t.gif")
 	end if
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+		LoadSpriteSheet("Global/Display.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+		LoadSpriteSheet("Global/Display.gif")
+	end if
+#endplatform
 #platform: Use_Origins
 	if Stage.PlayerListPos == PLAYER_KNUCKLES
 		LoadSpriteSheet("Global/Display_k.gif")
 	end if
 	if Stage.PlayerListPos == PLAYER_AMY
 		LoadSpriteSheet("Global/Display_a.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("Global/Display.gif")
+	end if
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("Global/Display.gif")
 	end if
 #endplatform
 	

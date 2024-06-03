@@ -182,6 +182,26 @@ sub ObjectStartup
 		SpriteFrame(-10, -22, 21, 48, 101, 1)
 	end if
 
+#platform: Use_Standalone
+	if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+		LoadSpriteSheet("Global/Items3.gif")
+		SpriteFrame(-14, -22, 29, 44, 116, 211)
+		SpriteFrame(-11, -22, 20, 44, 146, 211)
+		SpriteFrame(-11, -22, 25, 44, 167, 211)
+		SpriteFrame(-13, -22, 25, 44, 193, 211)
+		SpriteFrame(-8, -22, 20, 44, 219, 211)
+	end if
+
+	if Stage.PlayerListPos == PLAYER_RAY_STANDALONE
+		LoadSpriteSheet("Global/Items3.gif")
+		SpriteFrame(-14, -22, 29, 44, 116, 211)
+		SpriteFrame(-11, -22, 20, 44, 146, 211)
+		SpriteFrame(-11, -22, 25, 44, 167, 211)
+		SpriteFrame(-13, -22, 25, 44, 193, 211)
+		SpriteFrame(-8, -22, 20, 44, 219, 211)
+	end if
+#endplatform
+
 #platform: Use_Origins
 	if Stage.PlayerListPos == PLAYER_KNUCKLES
 		LoadSpriteSheet("Players/KTE5.gif")
@@ -199,6 +219,24 @@ sub ObjectStartup
 		SpriteFrame(-14, -21, 28, 39, 48, 1)
 		SpriteFrame(-13, -21, 28, 39, 77, 1)
 		SpriteFrame(-7, -21, 21, 39, 1, 41)
+	end if
+
+	if Stage.PlayerListPos == PLAYER_MIGHTY_ORIGINS
+		LoadSpriteSheet("Global/Items3.gif")
+		SpriteFrame(-14, -22, 29, 44, 116, 211)
+		SpriteFrame(-11, -22, 20, 44, 146, 211)
+		SpriteFrame(-11, -22, 25, 44, 167, 211)
+		SpriteFrame(-13, -22, 25, 44, 193, 211)
+		SpriteFrame(-8, -22, 20, 44, 219, 211)
+	end if
+
+	if Stage.PlayerListPos == PLAYER_RAY_ORIGINS
+		LoadSpriteSheet("Global/Items3.gif")
+		SpriteFrame(-14, -22, 29, 44, 116, 211)
+		SpriteFrame(-11, -22, 20, 44, 146, 211)
+		SpriteFrame(-11, -22, 25, 44, 167, 211)
+		SpriteFrame(-13, -22, 25, 44, 193, 211)
+		SpriteFrame(-8, -22, 20, 44, 219, 211)
 	end if
 #endplatform
 	

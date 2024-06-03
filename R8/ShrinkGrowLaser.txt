@@ -152,7 +152,11 @@ sub ObjectStartup
 	if Stage.PlayerListPos == PLAYER_SONIC_A
 		LoadAnimation("MiniSonic.Ani")
 	else
-		LoadAnimation("MiniTails.Ani")
+		if Stage.PlayerListPos == PLAYER_MIGHTY_STANDALONE
+			LoadAnimation("MiniMighty.Ani")
+		else
+			LoadAnimation("MiniTails.Ani")
+		end if
 	end if
 #endplatform
 
